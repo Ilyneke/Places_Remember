@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,7 +39,45 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main_app',
+    'social_django',
+    'allauth',  # django-allauth apps
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',  # for Google OAuth 2.0
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.vk.VKOAuth2',           # VK authorisation
+    'social_core.backends.google.GoogleOAuth2',   # Google authorisation (old)
+    'django.contrib.auth.backends.ModelBackend',  # classic authorisation to make usual login/pass works
+    'allauth.account.auth_backends.AuthenticationBackend',  # Google authorisation
+)
+
+'''SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'XXXXXXXX'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'XXXXXXXXX'''
+
+
+SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = "/"
+
+# Additional configuration settings
+SOCIALACCOUNT_QUERY_EMAIL = True
+ACCOUNT_LOGOUT_ON_GET= True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = True
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,7 +94,7 @@ ROOT_URLCONF = 'places_remember.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -67,6 +106,12 @@ TEMPLATES = [
         },
     },
 ]
+
+
+# static and media folder directory
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+'''MEDIA_ROOT = os.path.join(BASE_DIR, 'media')'''
+
 
 WSGI_APPLICATION = 'places_remember.wsgi.application'
 

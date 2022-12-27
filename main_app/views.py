@@ -1,9 +1,11 @@
 from django.shortcuts import render
+from django.contrib.auth import logout
 
 
 def index(request):
     return render(request, 'main_app/index.html')
 
 
-def my_page(request):
-    return render(request, 'main_app/mypage.html')
+def logout_view(request):
+    logout(request)
+

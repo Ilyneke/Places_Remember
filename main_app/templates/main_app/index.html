@@ -1,8 +1,15 @@
 {% extends 'main_app/layout.html' %}
+{% load socialaccount %}
 
 {% block title %}Главная страница{% endblock %}
 
-{% block content %}
+{% block login %}
     <h1>Главная страница</h1>
-    <p>главная страница</p>
+    <p>Welcome, {{ user.username }} !</p>
+    <a href="{% url 'account_logout' %}">Logout</a>
+{% endblock %}
+
+{% block logout %}
+    <h1>Страница пользователя</h1>
+    <a href="{% provider_login_url 'google' %}">Login with Google</a>
 {% endblock %}
