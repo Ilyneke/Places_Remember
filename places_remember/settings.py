@@ -63,7 +63,8 @@ LOGOUT_REDIRECT_URL = "/"
 
 # Additional configuration settings
 SOCIALACCOUNT_QUERY_EMAIL = True
-ACCOUNT_LOGOUT_ON_GET= True
+SOCIALACCOUNT_LOGIN_ON_GET = True  # to skip "You are about to sign..."
+ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_REQUIRED = True
 
