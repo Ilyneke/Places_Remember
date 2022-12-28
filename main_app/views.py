@@ -1,15 +1,16 @@
 from django.shortcuts import render
 from django.contrib.auth import logout
 from django.views.generic.base import TemplateView
-from django.urls import reverse_lazy
-# from .forms import MapModelForm
-# from .models import Map
-#
-# class MapCreateView:
-#     template_name = 'main_app/addmemory.html'
-#     form_class = MapModelForm
-#     success_message = 'Success: memory was created.'
-#     success_url = reverse_lazy('main_app/index')
+from django.views import View
+from .models import Memory
+
+
+# class MainView(View):
+#     def get(self, request, *args, **kwargs):
+#         posts = Memory.objects.all()
+#         return render(request, 'main_app/index.html', context={
+#             'posts': posts
+#         })
 
 
 class MarkersMapView(TemplateView):
@@ -23,7 +24,8 @@ def addmem(request):
 
 
 def index(request):
-    return render(request, 'main_app/index.html')
+    posts = Memory.objects.all()
+    return render(request, 'main_app/index.html', {'posts': posts})
 
 
 def logout_view(request):
