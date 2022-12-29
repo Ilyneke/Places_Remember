@@ -14,6 +14,7 @@
             <p>Укажите точку на карте, название воспоминания и его описание.</p>
             <form method="post">
               {% csrf_token %}
+              {{ form }}
               <div id="map" style="width: 100%; height: 400px"></div>
               <div class="mb-3">
                 <label for="InputTitle" class="form-label">Название</label>
