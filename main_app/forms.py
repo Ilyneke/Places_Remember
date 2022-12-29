@@ -1,7 +1,8 @@
-# from .models import Map
+from .models import Memory
+from django.forms import ModelForm
 
 
-# class MapModelForm:
-#     class Meta:
-#         model = Map
-#         fields = ['title', 'commentary', 'place']
+class MemoryForm(ModelForm):
+    class Meta:
+        model = Memory
+        fields = ['title', 'description', 'author', 'center0', 'center1', 'zoom']
