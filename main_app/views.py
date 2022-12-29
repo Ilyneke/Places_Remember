@@ -1,22 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth import logout
-from django.views.generic.base import TemplateView
-from django.views import View
+from django.contrib.auth.models import AnonymousUser
 from .models import Memory
-
-
-# class MainView(View):
-#     def get(self, request, *args, **kwargs):
-#         posts = Memory.objects.all()
-#         return render(request, 'main_app/index.html', context={
-#             'posts': posts
-#         })
-
-
-class MarkersMapView(TemplateView):
-    """Markers map view."""
-
-    template_name = "map.html"
+from .forms import MemoryForm
 
 
 def addmem(request):
@@ -24,8 +10,11 @@ def addmem(request):
 
 
 def index(request):
-    posts = Memory.objects.all()
-    return render(request, 'main_app/index.html', {'posts': posts})
+    form = MemoryForm()
+    if not isinstance(request.user, AnonymousUser):  # если пользователь авторизован, возвращаем его воспоминания
+        posts = Memory.objects.filter(author=request.user)
+        return render(request, 'main_app/index.html', {'posts': posts, 'form': form})
+    return render(request, 'main_app/index.html', {'form': form})  # иначе возвращаем без воспоминаний
 
 
 def logout_view(request):
