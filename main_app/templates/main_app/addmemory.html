@@ -12,24 +12,25 @@
           </div>
           <div class="modal-body">
             <p>Укажите точку на карте, название воспоминания и его описание.</p>
-            <form>
+            <form method="post">
+              {% csrf_token %}
+              {{ form }}
               <div id="map" style="width: 100%; height: 400px"></div>
               <div class="mb-3">
-                <label for="InmutTitle" class="form-label">Название</label>
-                <input type="text" class="form-control" id="InmutTitle" aria-describedby="tipTitle">
+                <label for="InputTitle" class="form-label">Название</label>
+                <input type="text" class="form-control" name="title" id="InputTitle" aria-describedby="tipTitle">
                 <div id="tipTitle" class="form-text">Введите название воспоминания</div>
               </div>
               <div class="mb-3">
                 <label for="InputDescription" class="form-label">Описание</label>
-                <input type="text" class="form-control" id="InputDescription" aria-describedby="tipDescription">
+                <input type="text" class="form-control" name="description" id="InputDescription" aria-describedby="tipDescription">
                 <div id="tipDescription" class="form-text">Введите комментарий о воспоминании</div>
               </div>
+              <div class="modal-footer">
+                <a href="{% url 'index' %}"><button type="submit" class="btn btn-primary">Добавить</button></a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+              </div>
             </form>
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Добавить</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
           </div>
         </div>
       </div>
