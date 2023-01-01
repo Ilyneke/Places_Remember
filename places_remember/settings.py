@@ -44,17 +44,14 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',  # for Google OAuth 2.0
+    'allauth.socialaccount.providers.vk',  # VK authorisation
 ]
 
 AUTHENTICATION_BACKENDS = (
-    'social_core.backends.vk.VKOAuth2',           # VK authorisation
     'social_core.backends.google.GoogleOAuth2',   # Google authorisation (old)
     'django.contrib.auth.backends.ModelBackend',  # classic authorisation to make usual login/pass works
     'allauth.account.auth_backends.AuthenticationBackend',  # Google authorisation
 )
-
-'''SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = 'XXXXXXXX'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'XXXXXXXXX'''
 
 
 SITE_ID = 1
@@ -77,7 +74,16 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {
             'access_type': 'online',
         }
-    }
+    },
+    'vk': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    },
 }
 
 MIDDLEWARE = [
