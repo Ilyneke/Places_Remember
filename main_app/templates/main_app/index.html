@@ -1,5 +1,6 @@
 {% extends 'main_app/layout.html' %}
 {% load socialaccount %}
+{% load account %}
 {% load static %}
 
 {% block title %}Главная страница{% endblock %}
@@ -7,10 +8,15 @@
 {% block login %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <a href="#" class="navbar-brand">
-            <img alt="photo" src="{{ user.socialaccount_set.all.0.get_avatar_url }}">
+            <img alt="photo" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" height="100px">
         </a>
-        <a href="#" class="navbar-brand">
-            <p>Добро пожаловать, {{ user.socialaccount_set.all.0.extra_data.name }}!</p>
+        <a href="" class="navbar-brand">
+            {% if user.socialaccount_set.all.0.extra_data.name %}
+                <p>Добро пожаловать, {{ user.socialaccount_set.all.0.extra_data.name }}!</p>
+            {% else %}
+<!--                отображает ссылку пользователя ВК-->
+                <p>Добро пожаловать, {{ user }}!</p>
+            {% endif %}
         </a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <a href="{% url 'account_logout' %}" class="btn btn-outline-light mr-2">Выход</a>
@@ -25,6 +31,8 @@
             <div>
                 <h3>{{ post.title }}</h3>
                 <p>{{ post.description }}</p>
+
+                {% include 'main_app/view_map.html' %}
             </div>
         {% endfor %}
     {% else %}
@@ -39,8 +47,8 @@
             <p>Places Remember</p>
         </a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <a href="{% provider_login_url 'google' %}" class="btn btn-outline-light mr-2">Войти с помощью Google</a>
-            <a href="" class="btn btn-outline-light mr-2">Войти с помощью VK (пока не реализовано)</a>
+            <button class="btn btn-outline-light mr-2"><a href="{% provider_login_url 'google' %}">Войти с помощью Google</a></button>
+            <button class="btn btn-outline-light mr-2"><a href="{% provider_login_url 'vk' %}">Войти с помощью VK</a></button>
         </div>
     </nav>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deleniti mollitia odit officia provident quidem repellendus ut? Accusamus, architecto, autem enim ipsum laborum nam perferendis similique tempora vero vitae voluptatum!</l></p>
