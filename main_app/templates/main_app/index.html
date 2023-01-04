@@ -1,47 +1,56 @@
 {% extends 'main_app/layout.html' %}
 {% load socialaccount %}
+{% load account %}
 {% load static %}
 
 {% block title %}Главная страница{% endblock %}
 
 {% block login %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top px-3">
         <a href="#" class="navbar-brand">
-            <img alt="photo" src="{{ user.socialaccount_set.all.0.get_avatar_url }}">
+            <img alt="photo" src="{{ user.socialaccount_set.all.0.get_avatar_url }}" height="100px">
         </a>
-        <a href="#" class="navbar-brand">
-            <p>Добро пожаловать, {{ user.socialaccount_set.all.0.extra_data.name }}!</p>
+        <a href="" class="navbar-brand">
+            {% if user.socialaccount_set.all.0.extra_data.name %}
+                <p>Добро пожаловать, {{ user.socialaccount_set.all.0.extra_data.name }}!</p>
+            {% else %}
+<!--                отображает ссылку пользователя ВК-->
+                <p>Добро пожаловать, {{ user }}!</p>
+            {% endif %}
         </a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <a href="{% url 'account_logout' %}" class="btn btn-outline-light mr-2">Выход</a>
+        <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
+            <a href="{% url 'account_logout' %}" class="btn btn-outline-light">Выход</a>
         </div>
     </nav>
 
     <!-- Create memory button, form -->
-    {% include 'main_app/addmemory.html' %}
+    <div class="p-3">{% include 'main_app/addmemory.html' %}</div>
 
     {% if posts %}
-        {% for post in posts %}
-            <div>
-                <h3>{{ post.title }}</h3>
-                <p>{{ post.description }}</p>
-            </div>
-        {% endfor %}
+        <div class="p-3">
+            {% for post in posts %}
+                <div class="border border-dark p-3 my-3 bg-gradient-dark bg-dark ">
+                    <h3 class="text-white">{{ post.title }}</h3>
+                    <p class="text-white">{{ post.description }}</p>
+                    {% include 'main_app/view_map.html' %}
+                </div>
+            {% endfor %}
+        </div>
     {% else %}
-        <h3>У вас нет ни одного воспоминания</h3>
+        <h3 class="text-center info-message align-middle d-flex justify-content-center align-items-center">У вас нет ни одного воспоминания</h3>
     {% endif %}
 
 {% endblock %}
 
 {% block logout %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-        <a href="#" class="navbar-brand">
-            <p>Places Remember</p>
-        </a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <a href="{% provider_login_url 'google' %}" class="btn btn-outline-light mr-2">Войти с помощью Google</a>
-            <a href="" class="btn btn-outline-light mr-2">Войти с помощью VK (пока не реализовано)</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top d-flex align-items-center px-3 justify-content-between">
+        <div class="navbar-brand m-0">
+            <p class="m-0 h3">Places Remember</p>
+        </div>
+        <div class="d-flex align-items-center w-auto" id="navbarSupportedContent">
+            <button class="btn btn-outline-light mx-2 d-block"><a class="text-decoration-none text-info" href="{% provider_login_url 'google' %}">Войти с помощью Google</a></button>
+            <button class="btn btn-outline-light mx-2 d-block"><a class="text-decoration-none text-info" href="{% provider_login_url 'vk' %}">Войти с помощью VK</a></button>
         </div>
     </nav>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur deleniti mollitia odit officia provident quidem repellendus ut? Accusamus, architecto, autem enim ipsum laborum nam perferendis similique tempora vero vitae voluptatum!</l></p>
+    <div class="p-3"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aspernatur commodi culpa cupiditate dignissimos ducimus ea eligendi eveniet, excepturi facere fugit id inventore minima molestias possimus quidem rem reprehenderit, veniam!</lo></p></div>
 {% endblock %}

@@ -1,0 +1,21 @@
+{% load static %}
+    <button id="button_id"
+            type="button"
+            class="btn btn-light"
+            data-bs-toggle="modal"
+            data-bs-target="#view_map_{{ post.id }}">Показать на карте</button>
+
+    <div class="modal" tabindex="-1" role="dialog" id="view_map_{{ post.id }}">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div id="map2_{{ post.id }}" class="view_map" data-id="{{ post.id }}" style="width: 100%; height: 500px"></div>
+            <form name="thisMemoryForm" id="view_memory">
+              <input class="take_lat" type="hidden" name="lat" id="take_lat" data-id="{{ post.id }}" value="{{ post.lat }}">
+              <input class="take_lng" type="hidden" name="lng" id="take_lng" data-id="{{ post.id }}" value="{{ post.lng }}">
+              <input class="take_zoom" type="hidden" name="zoom" id="take_zoom" data-id="{{ post.id }}" value="{{ post.zoom }}">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
