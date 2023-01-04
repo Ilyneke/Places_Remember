@@ -29,6 +29,7 @@ def index(request):
             form_error = 'Форма была заполнена неправильно!'
     else:
         form = MemoryForm()
+        form['author'].initial = get_user(request).pk
     data = {
         'error': form_error,
         'form': form
