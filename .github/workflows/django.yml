@@ -28,3 +28,6 @@ jobs:
     - name: Run Tests
       run: |
         python manage.py test main_app.tests.BaseFunctions.main_test
+    - name: Coveralls GitHub Action
+      uses: coverallsapp/github-action@1.1.3
+
